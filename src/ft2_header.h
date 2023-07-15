@@ -1,6 +1,8 @@
 #pragma once
 
+#ifndef FT2_HEADLESS
 #include <SDL2/SDL.h>
+#endif
 #include <stdint.h>
 #include <stdbool.h>
 #include <assert.h>

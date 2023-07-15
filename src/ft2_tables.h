@@ -39,9 +39,11 @@ extern const uint8_t pattCursorXTab[2 * 4 * 8];
 extern const uint8_t pattCursorWTab[2 * 4 * 8];
 extern const char chDecTab1[MAX_CHANNELS+1];
 extern const char chDecTab2[MAX_CHANNELS+1];
+#ifndef FT2_HEADLESS
 extern const SDL_Keycode key2VolTab[16];
 extern const SDL_Keycode key2EfxTab[36];
 extern const SDL_Keycode key2HexTab[16];
+#endif
 extern const uint8_t scopeMuteBMP_Widths[16];
 extern const uint8_t scopeMuteBMP_Heights[16];
 extern const uint16_t scopeMuteBMP_Offs[16];

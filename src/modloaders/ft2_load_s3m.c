@@ -618,12 +618,14 @@ bool loadS3M(FILE *f, uint32_t filesize)
 	}
 
 	songTmp.numChannels = countS3MChannels(hdr.numPatterns);
-
+#ifndef FT2_HEADLESS
 	if (adlibInsWarn)
 		loaderMsgBox("Warning: The module contains unsupported AdLib instruments!");
 
+
 	if (!(config.dontShowAgainFlags & DONT_SHOW_IMPORT_WARNING_FLAG))
 		loaderSysReq(6, "System message", "Loading of this format is not fully supported and can have issues.");
+#endif
 
 	return true;
 }
