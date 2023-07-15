@@ -24,3 +24,7 @@ vs2019_project/ft2-clone/Debug/ft2-clone.vcxproj.FileListAbsolute.txt
 *.enc
 /vs2019_project/.vs/ft2-clone/FileContentIndex
 /vs2019_project/.vs/ft2-clone/v17
+/vs2019_project/x64/Release
+/vs2019_project/libft2-test/x64/Release
+/vs2019_project/libft2/x64/Release
+/vs2019_project/x64/Debug
