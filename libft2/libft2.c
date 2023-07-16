@@ -1443,3 +1443,77 @@ void libft2_unloadModule() {
 	freeAllInstr();
 	freeAllPatterns();
 }
+
+#define hinib(w) (w >> 4)
+#define lonib(w) (w & 0xF)
+#define hibyte(w) (w >> 8)
+#define lobyte(w) (w & 0xFF)
+#define hiword(dw) (dw >> 16)
+#define loword(dw) (dw & 0xFFFF)
+
+void libft2_notedataFromNote(note_t* src, libft2_notedata_t* dest) {
+	memset(dest, 0, sizeof(libft2_notedata_t));
+
+	dest->note = src->note;
+	dest->inst = src->instr;
+
+	// volume
+	if (src->vol == 0) {
+		dest->volCmd = libft2_Volume_NONE;
+	}
+	else if (src->vol >= 16 && src->vol <= 80) {
+		dest->volCmd = libft2_Volume_SET;
+		dest->vol = src->vol - 16;
+	}
+	else {
+		dest->volCmd = hinib(src->vol);
+		dest->vol = lonib(src->vol);
+	}
+
+	// efx
+	dest->efx = src->efx;
+	if (dest->efx == libft2_EFX_E_CMD) {
+		dest->eCmd = hinib(src->efxData);
+		dest->efx_x = lonib(src->efxData);
+	}
+	else {
+		switch (dest->efx) {
+		case libft2_EFX_PORTA_UP:
+		case libft2_EFX_PORTA_DN:
+		case libft2_EFX_PORTA_NOTE:
+		case libft2_EFX_PORTA_VSLIDE:
+		case libft2_EFX_VIBR_VSLIDE:
+		case libft2_EFX_PANNING_POS:
+		case libft2_EFX_SAMP_OFF:
+		case libft2_EFX_JUMP_POS:
+		case libft2_EFX_VSET:
+		case libft2_EFX_PAT_BRK:
+		case libft2_EFX_SPD_TEMPO:
+		case libft2_EFX_GLOBAL_VSET:
+		case libft2_EFX_SET_ENV_POS:
+			dest->efx_x = src->efxData;
+			break;
+
+		case libft2_EFX_ARPEGGIO:
+		case libft2_EFX_VIBRATO:
+		case libft2_EFX_TREMOLO:
+		case libft2_EFX_VSLIDE:
+		case libft2_EFX_GLOBAL_VSLIDE:
+		case libft2_EFX_PANSLIDE:
+		case libft2_EFX_MULTI_RETRIG:
+		case libft2_EFX_TREMOR:
+			dest->efx_x = hinib(src->efxData);
+			dest->efx_y = lonib(src->efxData);
+			break;
+
+		case libft2_EFX_XFPORTA_UP:
+			dest->efx_x = lonib(src->efxData);
+			if (hinib(src->efxData) == 2) {
+				dest->eCmd = libft2_EFX_XFPORTA_DN;
+			}
+			break;
+		}
+	}
+
+	
+}

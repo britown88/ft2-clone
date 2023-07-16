@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 
 //BSD 3 - clause license :
 //
-//Copyright(c) 2016 - 2023, Olav S�rensen
+//Copyright(c) 2016 - 2023, Olav Sørensen
 //All rights reserved.
 //
 //Redistribution and use in source and binary forms, with or without
@@ -19,7 +19,7 @@
 //THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 //ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 //WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-//DISCLAIMED.IN NO EVENT SHALL OLAV S�RENSEN BE LIABLE FOR ANY
+//DISCLAIMED.IN NO EVENT SHALL OLAV SØRENSEN BE LIABLE FOR ANY
 //DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 //(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 //LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -143,6 +143,90 @@ extern note_t* pattern[MAX_PATTERNS];
 
 int libft2_loadModule(UNICHAR* path);
 void libft2_unloadModule();
+
+typedef enum libft2_NoteCommands {
+	libft2_Note_NONE = 0,
+	libft2_Note_MIN = 1,  // C0
+	libft2_Note_MAX = 96, // B7
+	libft2_Note_OFF = 97  // ===
+} libft2_NoteCommands;
+
+
+typedef enum libft2_VolumeCommands {
+	libft2_Volume_NONE = 0,
+	libft2_Volume_SET = 1, // 16-80
+	libft2_Volume_SLIDE_UP = 7,		//0x70	+	spd
+	libft2_Volume_SLIDE_DWN = 6,		//0x60	-	spd
+	libft2_Volume_FINESLIDE_UP = 9,	//0x90	🔼	spd
+	libft2_Volume_FINESLIDE_DN = 8,  //0x80	🔽	spd
+	libft2_Volume_VIBRATO_SPD = 10,	//0xA0	S	spd
+	libft2_Volume_VIBRATO = 11,		//0xB0	V	spd
+	libft2_Volume_PANNING_POS = 12,	//0xC0	P	pos
+	libft2_Volume_PANSLIDE_RGHT = 13,//0xD0	▶	spd	
+	libft2_Volume_PANSLIDE_LEFT = 14,//0xE0	◀	spd
+	libft2_Volume_TONE_PORTAMENTO = 15,//0xF0 M	spd
+} libft2_VolumeCommands;
+
+typedef enum libft2_EffectCommands {
+	libft2_EFX_ARPEGGIO = 0,	// 0: semi1 semi2
+	libft2_EFX_PORTA_UP = 1,	// 1: speed
+	libft2_EFX_PORTA_DN = 2,   // 2: speed
+	libft2_EFX_PORTA_NOTE = 3, // 3: speed
+	libft2_EFX_VIBRATO = 4,		// 4: rate depth
+	libft2_EFX_PORTA_VSLIDE = 5,//5: speed
+	libft2_EFX_VIBR_VSLIDE = 6,// 6: speed
+	libft2_EFX_TREMOLO = 7,		// 7: rate depth
+	libft2_EFX_PANNING_POS = 8,// 8: pos
+	libft2_EFX_SAMP_OFF = 9,	// 9: offset
+	libft2_EFX_VSLIDE = 10,		// A: upSpd downSpd
+	libft2_EFX_JUMP_POS = 11,	// B: pos
+	libft2_EFX_VSET = 12,		// C: vol
+	libft2_EFX_PAT_BRK = 13,	// D: pos
+	libft2_EFX_E_CMD = 14,		// use libft2_EffectECommands
+	libft2_EFX_SPD_TEMPO = 15,	// F: spd/tempo 1-31 sets speed, 32-255 sets tempo...weird!
+	libft2_EFX_GLOBAL_VSET = 16,//G: vol
+	libft2_EFX_GLOBAL_VSLIDE=17,//H: upSpd downSpd
+	libft2_EFX_SET_ENV_POS = 21,//L: pos
+	libft2_EFX_PANSLIDE = 25,	// P: rightSpd leftSpd
+	libft2_EFX_MULTI_RETRIG=27,// R: interval volChang
+	libft2_EFX_TREMOR = 29,		// T: onTime offTime
+	libft2_EFX_XFPORTA_UP = 33,// X1: spd
+	libft2_EFX_XFPORTA_DN = 34,// X2: spd
+
+} libft2_EffectCommands;
+
+typedef enum libft2_EffectECommands {
+	libft2_ECMD_FILTER = 0,		// E:  01
+	libft2_ECMD_FPORTA_UP = 1, // E1: speed
+	libft2_ECMD_FPORTA_DN = 2, // E2: speed
+	libft2_ECMD_GLISSANDO = 3, // E3: status
+	libft2_ECMD_VIBR_CTRL = 4, // E4: type
+	libft2_ECMD_FINE_TUNE = 5, // E5: tune
+	libft2_ECMD_PAT_LOOP = 6,	// E6: count
+	libft2_ECMD_TREM_CTRL = 7,	// E7: type
+	libft2_ECMD_RETRIG_NOTE = 9,//E9: interval
+	libft2_ECMD_FVSLIDE_UP = 10,//EA: speed
+	libft2_ECMD_FVSLIDE_DN = 11,//EB: speed
+	libft2_ECMD_NOTE_CUT = 12,  //EC: tick
+	libft2_ECMD_NOTE_DELAY = 13,//ED: ticks
+	libft2_ECMD_PAT_DELAY = 14, //EE: notes
+} libft2_EffectECommands;
+
+typedef struct libft2_notedata_t {
+	libft2_NoteCommands note;
+	libft2_VolumeCommands volCmd;
+	uint8_t vol;
+	uint8_t inst;
+
+	libft2_EffectCommands efx;
+	libft2_EffectECommands eCmd; // if efx is E
+
+	// these are split up and shifted correctly for the efx
+	uint8_t efx_x, efx_y;
+
+}libft2_notedata_t;
+
+void libft2_notedataFromNote(note_t* src, libft2_notedata_t* dest);
 
 
 #ifdef __cplusplus
