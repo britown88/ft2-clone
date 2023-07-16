@@ -190,8 +190,7 @@ typedef enum libft2_EffectCommands {
 	libft2_EFX_PANSLIDE = 25,	// P: rightSpd leftSpd
 	libft2_EFX_MULTI_RETRIG=27,// R: interval volChang
 	libft2_EFX_TREMOR = 29,		// T: onTime offTime
-	libft2_EFX_XFPORTA_UP = 33,// X1: spd
-	libft2_EFX_XFPORTA_DN = 34,// X2: spd
+	libft2_EFX_XFPORTA = 33,	// X (UP: 1 spd) (DN: 2 spd)
 
 } libft2_EffectCommands;
 
@@ -219,9 +218,9 @@ typedef struct libft2_notedata_t {
 	uint8_t inst;
 
 	libft2_EffectCommands efx;
-	libft2_EffectECommands eCmd; // if efx is E
 
 	// these are split up and shifted correctly for the efx
+	// if efx is E, use libft2_EffectECommands to read efx_x, param in efx_y
 	uint8_t efx_x, efx_y;
 
 }libft2_notedata_t;

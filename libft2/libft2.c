@@ -1473,8 +1473,8 @@ void libft2_notedataFromNote(note_t* src, libft2_notedata_t* dest) {
 	// efx
 	dest->efx = src->efx;
 	if (dest->efx == libft2_EFX_E_CMD) {
-		dest->eCmd = hinib(src->efxData);
-		dest->efx_x = lonib(src->efxData);
+		dest->efx_x = hinib(src->efxData);
+		dest->efx_y = lonib(src->efxData);
 	}
 	else {
 		switch (dest->efx) {
@@ -1502,15 +1502,9 @@ void libft2_notedataFromNote(note_t* src, libft2_notedata_t* dest) {
 		case libft2_EFX_PANSLIDE:
 		case libft2_EFX_MULTI_RETRIG:
 		case libft2_EFX_TREMOR:
+		case libft2_EFX_XFPORTA:
 			dest->efx_x = hinib(src->efxData);
 			dest->efx_y = lonib(src->efxData);
-			break;
-
-		case libft2_EFX_XFPORTA_UP:
-			dest->efx_x = lonib(src->efxData);
-			if (hinib(src->efxData) == 2) {
-				dest->eCmd = libft2_EFX_XFPORTA_DN;
-			}
 			break;
 		}
 	}
