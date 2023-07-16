@@ -72,9 +72,20 @@ typedef char UNICHAR;
 #include <stdbool.h>
 #include <stdint.h>
 
-#define MAX_ORDERS 256
-#define MAX_INST 128
+#define MIN_BPM 32
+#define MAX_BPM 255
+#define MAX_SPEED 31
+#define MAX_CHANNELS 32
+#define TRACK_WIDTH (5 * MAX_CHANNELS)
+#define C4_FREQ 8363
+#define NOTE_C4 (4*12)
+#define NOTE_OFF 97
+#define MAX_NOTES (10*12*16+16)
 #define MAX_PATTERNS 256
+#define MAX_PATT_LEN 256
+#define MAX_INST 128
+#define MAX_SMP_PER_INST 16
+#define MAX_ORDERS 256
 
 typedef struct pattNote_t // must be packed!
 {
