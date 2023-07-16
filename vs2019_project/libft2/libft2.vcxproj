@@ -104,7 +104,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FT2_HEADLESS;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)../src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +120,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FT2_HEADLESS;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)../src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,16 +131,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="libft2.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="..\..\libft2\libft2.c" />
     <ClCompile Include="..\..\src\modloaders\ft2_load_digi.c" />
     <ClCompile Include="..\..\src\modloaders\ft2_load_mod.c" />
     <ClCompile Include="..\..\src\modloaders\ft2_load_s3m.c" />
     <ClCompile Include="..\..\src\modloaders\ft2_load_stk.c" />
     <ClCompile Include="..\..\src\modloaders\ft2_load_stm.c" />
     <ClCompile Include="..\..\src\modloaders\ft2_load_xm.c" />
-    <ClCompile Include="libft2.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\libft2\libft2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

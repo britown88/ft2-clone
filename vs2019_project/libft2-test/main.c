@@ -1,4 +1,4 @@
-#include "../libft2/libft2.h"
+#include "../../libft2/libft2.h"
 
 int main(int argc, char* argv[]) {
    //if (!libft2_startup()) {
