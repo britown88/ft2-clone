@@ -87,6 +87,13 @@ typedef char UNICHAR;
 #define MAX_SMP_PER_INST 16
 #define MAX_ORDERS 256
 
+enum // envelope flags
+{
+	ENV_ENABLED = 1,
+	ENV_SUSTAIN = 2,
+	ENV_LOOP = 4
+};
+
 typedef struct pattNote_t // must be packed!
 {
 	uint8_t note, instr, vol, efx, efxData;
